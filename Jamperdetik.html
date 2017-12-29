@@ -1,0 +1,92 @@
+
+<html>
+<head>
+<link rel="stylesheet" href="https://rawgit.com/perampokgoogle/Jam-sekarang/master/style2.css">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+<meta http-equiv="refresh" content="60">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>:: Server Jam BMKG (BMKG NTP Server) ::</title>
+<link rel="shortcut icon" href="icon/iconlogo.png" type="image/ico" />
+<script language="JavaScript" src="https://rawgit.com/perampokgoogle/Jam-sekarang/master/index.html"></script>
+
+<script language="JavaScript">
+
+var weekdaystxt=["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"]
+var monthstxt=["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
+
+var deltaD = (servertimeOBJ.getTime())-(new Date().getTime());
+var displaySeconds = true; 
+var interval;
+
+function textdates(){
+getthedate();
+if (document.all||document.getElementById)
+t=setTimeout("textdates()", interval); 
+}
+
+function getthedate(){
+var clientDate = new Date();
+var serverdate = new Date(clientDate.getTime()+deltaD);
+var month=serverdate.getMonth()+1;
+var day=serverdate.getDate();
+var year=serverdate.getFullYear();
+var hours=serverdate.getHours();
+var minutes=serverdate.getMinutes();
+var seconds=serverdate.getSeconds();
+var milliseconds=serverdate.getMilliseconds();
+//var dn="AM";
+var minggu=weekdaystxt[serverdate.getDay()]
+var bulan=monthstxt[serverdate.getMonth()]
+//if (hours>=12){dn="PM";}
+//if (hours>12){hours=hours-12;}
+//if (hours==0){hours=12;}
+if (hours<=9){hours="0"+hours;}
+if (minutes<=9){minutes="0"+minutes;}
+//if (month<=9){month="0"+month;}
+//if (day<=9){day="0"+day;}
+
+if (displaySeconds){
+	if (seconds<=9){seconds="0"+seconds;}
+	if (milliseconds>=10&&milliseconds<=99){milliseconds="0"+milliseconds;}
+	if (milliseconds<10){milliseconds="00"+milliseconds;}
+//	var cdate="<div class='FontHari'>"+minggu+", "+day+" "+bulan+" "+year+"</div><div class='FontDigit'>"+hours+":"+minutes+":"+seconds+":"+milliseconds+" "+dn+" WIB</div>";
+//	interval = 1000 - serverdate.getMilliseconds(); 
+	var cdate="<div class='FontHari'>"+minggu+", "+day+" "+bulan+" "+year+"</div><div class='FontDigit'>"+hours+":"+minutes+":"+seconds+":"+milliseconds+" WIB</div>";
+	interval = 10; 
+	}
+else{
+//	var cdate="<div class='FontHari'>"+minggu+", "+day+" "+bulan+" "+year+"</div><div class='FontDigit'>"+hours+":"+minutes+" "+dn+" WIB</div>";
+	var cdate="<div class='FontHari'>"+minggu+", "+day+" "+bulan+" "+year+"</div><div class='FontDigit'>"+hours+":"+minutes+" WIB</div>";
+	interval = (60-seconds)*1000; 
+	}
+if (document.all)
+document.all.sTime.innerHTML=cdate;
+else if (document.getElementById)
+document.getElementById("sTime").innerHTML=cdate;
+else{
+document.write(cdate);
+}
+}
+</script>
+</head>
+
+<body onLoad="textdates()" bgcolor="#222222" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
+<center>
+<table width="100%" height="93%"><tr><td width="100%" height="100%" align="center" valign="middle">
+<div align="center">
+<span id="sTime" OnMouseOver="displaySeconds=true;textdates();" OnMouseOut="displaySeconds=false;">sinkronisasi jam server ...</span>
+</div>
+</td></tr></table>
+<div class="Jam">
+<a href="JamServerFD-WU.html">WIB & UTC Time</a> 
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
+<a href="JamServerFS.html">Standard Font</a>
+&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
+<a href="#" onClick="location.reload(true);return false;">Reload</a>
+</div>
+</center>
+</center>	
+</body>
+</html>
